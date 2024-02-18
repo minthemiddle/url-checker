@@ -70,7 +70,7 @@ class TestResolveUrl(unittest.TestCase):
 
         result = resolve_url('http://example.com')
 
-        self.assertEqual(result, ('http://example.com', None, None, 'Failed to resolve URL', None))
+        self.assertEqual(result, ('http://example.com', None, None, 'failed', None))
 
 if __name__ == '__main__':
     unittest.main()

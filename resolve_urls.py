@@ -30,7 +30,7 @@ def resolve_url(url):
         return (url, resolved_url, protocol, status, int(base_url_changed))
 
     except requests.exceptions.RequestException as e:
-        return (url, None, None, str(e), None)
+        return (url, None, None, 'failed', None)
 
 @click.command()
 @click.option('input_file', '-i', required=True, type=click.File('r'), help="Path to the input file containing URLs.")
