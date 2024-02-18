@@ -42,6 +42,10 @@ def main(input_file, output_file):
         results = list(executor.map(resolve_url, urls))
 
     df = pd.DataFrame(results, columns=['original_url', 'resolved_url', 'protocol', 'status', 'base_url_changed'])
+    
+    # Explicitly cast 'base_url_changed' to integer
+    df['base_url_changed'] = df['base_url_changed'].astype(int)
+    
     df.to_csv(output_file, index=False, quoting=csv.QUOTE_ALL)
 
 if __name__ == '__main__':

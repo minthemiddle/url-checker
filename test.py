@@ -71,6 +71,15 @@ class TestResolveUrl(unittest.TestCase):
         result = resolve_url('http://example.com')
 
         self.assertEqual(result, ('http://example.com', None, None, 'failed', None))
+        
+    def test_base_url_changed_not_float(self):
+            # Assuming this URL does not result in a base URL change
+            result = resolve_url('http://example.com')
+            self.assertNotEqual(str(result[4]), "0.0", "base_url_changed should not be '0.0'")
+    
+            # Assuming this URL results in a base URL change
+            result = resolve_url('http://redirected-example.com')
+            self.assertNotEqual(str(result[4]), "1.0", "base_url_changed should not be '1.0'")
 
 if __name__ == '__main__':
     unittest.main()
