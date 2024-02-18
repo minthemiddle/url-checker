@@ -19,6 +19,10 @@ class TestResolveUrl(unittest.TestCase):
     
         self.assertNotEqual(result.exit_code, 0)
         self.assertIn("Error: Invalid value for '-i'", result.output)
+        
+    def test_malformed_url(self):
+            result = resolve_url('- https://example.com')
+            self.assertEqual(result, ('- https://example.com', None, None, 'no_url', None))
 
     @patch('resolve_urls.requests.head')
     def test_url_resolved_same_base(self, mock_head):

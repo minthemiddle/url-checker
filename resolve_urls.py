@@ -6,6 +6,10 @@ from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor
 
 def resolve_url(url):
+    
+    if not url.startswith(('http://', 'https://')):
+            return (url, None, None, 'malformed_url', None)
+
     try:
         response = requests.head(url, timeout=5)
         resolved_url = response.url
