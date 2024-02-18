@@ -12,7 +12,7 @@ Uses concurrency  to process URLs in parallel.
 
 **Usage**  
 `pip install click pandas`  
-`python3 url-checker.py --input_file urls.txt --output_file output.csv`
+`python3 url-checker.py - urls.txt -o output.csv`
 
 **Test**  
 Script comes with automated tests.  
