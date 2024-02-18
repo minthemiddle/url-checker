@@ -11,26 +11,21 @@ def resolve_url(url):
             return (url, None, None, 'malformed_url', None)
 
     try:
-        response = requests.head(url, timeout=5)
-        resolved_url = response.url
+        response = requests.get(url, timeout=5, allow_redirects=True)
+        resolved_url = response.url.rstrip('/')
         protocol = "https" if response.url.startswith("https") else "http"
         status = response.status_code
 
-        base_url = urlparse(url).netloc
-        resolved_base_url = urlparse(resolved_url).netloc
+        base_url = urlparse(url).netloc.replace('www.', '')
+        resolved_base_url = urlparse(resolved_url).netloc.replace('www.', '')
+        base_url_changed = base_url != resolved_base_url
         base_url_changed = base_url != resolved_base_url
     
-        # Check if the only difference is the addition or removal of 'www.'
-        if base_url_changed:
-            base_url_changed = not (
-                (base_url.startswith('www.') and base_url[4:] == resolved_base_url) or
-                (resolved_base_url.startswith('www.') and resolved_base_url[4:] == base_url)
-            )
-    
+        base_url_changed = int(base_url_changed)
         return (url, resolved_url, protocol, status, int(base_url_changed))
 
     except requests.exceptions.RequestException as e:
-        return (url, None, None, 'failed', None)
+        return (url, None, None, 'failed', 0)
 
 @click.command()
 @click.option('input_file', '-i', required=True, type=click.File('r'), help="Path to the input file containing URLs.")
